@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b12">
+  <meta name="description" content="Meet Astra: a simple home for discovering, downloading, and managing your Windows apps.">
+  <title>Astra — Your apps, all in one place</title>
+  <link rel="icon" type="image/png" href="assets/astra-logo.png">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b12;
+      --surface: #11141e;
+      --surface-raised: #171b28;
+      --text: #f5f6fb;
+      --muted: #9da3b7;
+      --line: rgba(255, 255, 255, .09);
+      --purple: #a78bfa;
+      --cyan: #70e1ed;
+      --content: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(ellipse at 75% 4%, rgba(108, 76, 202, .18), transparent 34rem),
+        radial-gradient(ellipse at 7% 37%, rgba(50, 151, 174, .08), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+    .wrap { width: min(var(--content), calc(100% - 48px)); margin-inline: auto; }
+
+    .header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, .045);
+    }
+
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 19px; font-weight: 750; letter-spacing: -.04em; }
+    .brand-logo { width: 36px; height: 36px; border-radius: 10px; object-fit: cover; }
+    .nav { display: flex; align-items: center; gap: 31px; color: var(--muted); font-size: 14px; font-weight: 550; }
+    .nav a:hover, .footer a:hover { color: var(--text); }
+    .nav .nav-cta { color: var(--text); border: 1px solid var(--line); padding: 9px 15px; border-radius: 10px; }
+
+    .banner { overflow: hidden; background: #08050f; }
+    .banner img { display: block; width: 100%; height: auto; max-height: 405px; object-fit: cover; object-position: center; }
+
+    .hero {
+      min-height: 645px;
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      align-items: center;
+      gap: 38px;
+      padding-block: 74px 90px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 11px;
+      border: 1px solid rgba(167, 139, 250, .23);
+      border-radius: 999px;
+      background: rgba(167, 139, 250, .07);
+      color: #c9b8ff;
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+    .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+    h1 { max-width: 590px; margin: 23px 0 19px; font-size: clamp(46px, 6.1vw, 75px); line-height: 1.03; letter-spacing: -.065em; }
+    .gradient-text { background: linear-gradient(100deg, #c0aaff 4%, #88cfff 57%, #74e6dc 100%); background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-copy { max-width: 500px; margin: 0; color: var(--muted); font-size: 17px; line-height: 1.8; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 30px; }
+    .button {
+      min-height: 49px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 19px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { background: linear-gradient(110deg, #a98afa, #7d9df8); color: #10101a; box-shadow: 0 8px 28px rgba(142, 113, 236, .23); }
+    .button-primary:hover { box-shadow: 0 12px 32px rgba(142, 113, 236, .34); }
+    .button-secondary { border-color: var(--line); background: rgba(255, 255, 255, .035); color: #e1e3ed; }
+    .button-secondary:hover { border-color: rgba(255, 255, 255, .2); }
+    .button svg { width: 17px; height: 17px; }
+    .download-note { margin: 13px 0 0; color: #777e93; font-size: 12px; }
+
+    .visual { position: relative; margin: 0; }
+    .app-screenshot { display: block; width: 100%; height: auto; border: 1px solid rgba(255, 255, 255, .13); border-radius: 15px; box-shadow: 0 28px 80px rgba(0, 0, 0, .4); }
+
+    .section { padding-block: 73px; border-top: 1px solid var(--line); }
+    .section-heading { max-width: 560px; margin: 0 auto 37px; text-align: center; }
+    .section-heading h2 { margin: 10px 0; font-size: clamp(30px, 4vw, 43px); letter-spacing: -.05em; line-height: 1.15; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 15px; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .feature {
+      min-height: 180px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .012));
+    }
+    .feature-icon { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid rgba(167, 139, 250, .19); border-radius: 11px; background: rgba(167, 139, 250, .09); color: #c2adff; }
+    .feature-icon svg { width: 19px; height: 19px; }
+    .feature h3 { margin: 16px 0 5px; font-size: 15px; letter-spacing: -.02em; }
+    .feature p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+    .download-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      margin-block: 37px 76px;
+      padding: 32px;
+      border: 1px solid rgba(167, 139, 250, .2);
+      border-radius: 18px;
+      background: radial-gradient(ellipse at 88% 50%, rgba(117, 104, 215, .14), transparent 42%), rgba(255, 255, 255, .025);
+    }
+    .download-panel h2 { margin: 0 0 5px; font-size: 23px; letter-spacing: -.04em; }
+    .download-panel p { margin: 0; color: var(--muted); font-size: 14px; }
+    .footer { display: flex; justify-content: space-between; gap: 18px; padding-block: 23px 29px; border-top: 1px solid var(--line); color: #81879b; font-size: 12px; }
+    .footer-links { display: flex; gap: 21px; }
+
+    @media (max-width: 800px) {
+      .hero { min-height: auto; grid-template-columns: 1fr; gap: 35px; padding-block: 70px; }
+      .hero-copy { max-width: 570px; }
+      .visual { width: min(100%, 680px); margin-inline: auto; }
+      .features { grid-template-columns: 1fr; }
+      .feature { min-height: 0; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(var(--content), calc(100% - 34px)); }
+      .header { height: 70px; }
+      .nav { gap: 13px; font-size: 12px; }
+      .nav a:first-child { display: none; }
+      .nav .nav-cta { padding: 8px 11px; }
+      .hero { padding-block: 57px 61px; }
+      h1 { font-size: clamp(43px, 13vw, 62px); }
+      .hero-copy { font-size: 15px; }
+      .actions { align-items: stretch; flex-direction: column; }
+      .button { width: 100%; }
+      .section { padding-block: 57px; }
+      .download-panel { align-items: stretch; flex-direction: column; padding: 23px; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header wrap" id="top">
+    <a class="brand" href="#top" aria-label="Astra home">
+      <img class="brand-logo" src="assets/astra-logo.png" alt="">
+      Astra
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="https://discord.gg/astraofficial" target="_blank" rel="noopener noreferrer">Community</a>
+      <a class="nav-cta" href="https://github.com/AstraOfficalDevelopment/Astra/releases/download/v2.4/Astra-Setup-v2.4.exe">Download <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <div class="banner">
+    <img src="assets/astra-banner.png" alt="Astra — discover, download, and manage your apps">
+  </div>
+
+  <main>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div>
+        <span class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> A better way to get your apps</span>
+        <h1 id="hero-title">Your apps.<br><span class="gradient-text">All in one place.</span></h1>
+        <p class="hero-copy">Astra makes finding and managing your Windows apps feel effortless. Browse the apps you need, get set up, and keep everything organized from one simple place.</p>
+        <div class="actions">
+          <a class="button button-primary" href="https://github.com/AstraOfficalDevelopment/Astra/releases/download/v2.4/Astra-Setup-v2.4.exe">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download for Windows
+          </a>
+          <a class="button button-secondary" href="https://discord.gg/astraofficial" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19.5 5.5a16.7 16.7 0 0 0-4.1-1.3l-.5 1a15.4 15.4 0 0 0-5.8 0l-.5-1a16.7 16.7 0 0 0-4.1 1.3C1.9 9.3 1.2 13 1.6 16.7a16.8 16.8 0 0 0 5 2.5l1.1-1.8-1.8-.9.4-.3a11.8 11.8 0 0 0 11.4 0l.4.3-1.8.9 1.1 1.8a16.8 16.8 0 0 0 5-2.5c.5-4.3-.8-8-3-11.2ZM8.7 14.8c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z" fill="currentColor"/></svg>
+            Join the Discord
+          </a>
+        </div>
+        <p class="download-note">Free to download · Made for Windows</p>
+      </div>
+
+      <figure class="visual">
+        <img class="app-screenshot" src="assets/astra-app.png" alt="Screenshot of Astra's Windows app manager showing app discovery, featured apps, and installed games">
+      </figure>
+    </section>
+
+    <section class="section" id="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <span class="eyebrow">Less searching, more doing</span>
+          <h2 id="features-title">A little more order.<br>A lot less hassle.</h2>
+          <p>All the essentials for a smoother app setup, wrapped in a clean and easy-to-use experience.</p>
+        </div>
+        <div class="features">
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5M8 10.8h5.6M10.8 8v5.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+            <h3>Discover useful apps</h3>
+            <p>Explore a curated-feeling library and find handy tools without hopping between a dozen websites.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Get set up simply</h3>
+            <p>Bring app discovery and downloads together in one straightforward place on your Windows PC.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H20v14H5.5A1.5 1.5 0 0 0 4 19.5v-14ZM4 19.5A1.5 1.5 0 0 1 5.5 18H20M8 8h8M8 11h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Keep your apps organized</h3>
+            <p>Astra gives your app setup a home, so it is easier to keep track of the tools you use.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="download-panel wrap" aria-labelledby="download-title">
+      <div>
+        <h2 id="download-title">Ready to meet Astra?</h2>
+        <p>Get started on your Windows PC, and join the community on Discord.</p>
+      </div>
+      <a class="button button-primary" href="https://github.com/AstraOfficalDevelopment/Astra/releases/download/v2.4/Astra-Setup-v2.4.exe">
+        Download Astra
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <span>© Astra · Made for Windows</span>
+    <div class="footer-links">
+      <a href="https://github.com/AstraOfficalDevelopment/Astra/releases/download/v2.4/Astra-Setup-v2.4.exe">Download</a>
+      <a href="https://discord.gg/astraofficial" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+  </footer>
+</body>
+</html>
